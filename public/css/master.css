@@ -1,0 +1,96 @@
+* {
+box-sizing: border-box;
+margin: 0 auto;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  background-color: #F5F5F5;
+  font-family: 'Quicksand', sans-serif;
+}
+
+header {
+  background-color: #F57C00;
+  height: 15vh;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: stretch;
+  align-items: center;
+}
+
+.head-title {
+  flex-basis: 60%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+
+.logo-area {
+  flex-basis: 15%;
+  text-align: center;
+  padding: 0% 2%;
+}
+
+.title-area {
+  flex-basis: 85%;
+  text-align: left;
+}
+
+.title-area h1 {
+  text-align: left;
+}
+
+ .head-links {
+  flex-basis: 40%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: stretch;
+  align-items: center;
+}
+
+.head-links a {
+  text-decoration: none;
+  color: white;
+  padding: 0% 3%;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+.head-logo {
+  width: 5vw;
+}
+
+.login-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.login-enter {
+  flex-basis: 60%;
+  padding: 5%;
+}
+
+.login-about {
+  text-align: left;
+  flex-basis: 40%;
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/*h1 {
+  font-family: 'Fjalla One', sans-serif;
+}*/
