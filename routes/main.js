@@ -18,7 +18,9 @@ router.use(expressValidator())
 router.get('/', function (req, res) {
   sess = req.session
   if (sess.username) {
-    return res.render('index')
+    return res.render('index', {
+      user: sess.username
+    })
   } else {
     return res.redirect('/login')
   }
@@ -32,16 +34,36 @@ router.get('/signup', function (req, res) {
   res.render('signup')
 })
 
+router.get('/logout', function (req, res) {
+  sess = req.session
+  sess.username = ''
+  sess.password = ''
+  res.redirect('/')
+})
+
+router.get('/profile/:id', function (req, res) {
+  res.render('profile')
+})
+
+router.get('/about', function (req, res) {
+  res.render('about')
+})
+
 router.post('/signup', function (req, res) {
-  const user = models.User.build({
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email
-  })
-  user.save()
-    .then(function () {
-      res.redirect('/')
+  if (req.body.password1 === req.body.password2) {
+    const user = models.User.build({
+      username: req.body.username,
+      password: req.body.password1,
+      email: req.body.email
     })
+    user.save()
+      .then(function () {
+        return res.redirect('/')
+      })
+  } else {
+    console.log('Passwords do not match')
+    return res.render('signup')
+  }
 })
 
 router.post('/login', function (req, res) {
@@ -52,8 +74,8 @@ router.post('/login', function (req, res) {
       username: req.body.username
     }}).then(function (user) {
       if (user.username === req.body.username && user.password === req.body.password) {
-        sess.username = req.body.username
-        sess.password = req.body.password
+        sess.username = user.username
+        sess.password = user.password
         console.log('the user is' + sess.username)
         console.log('their password is' + sess.password)
         return res.redirect('/')
@@ -66,14 +88,6 @@ router.post('/login', function (req, res) {
 
 router.post('/newUser', function (req, res) {
   res.redirect('/signup')
-})
-
-router.post('/logout', function (req, res) {
-  sess = req.session
-  sess.username = ''
-  sess.password = ''
-
-  res.redirect('/')
 })
 
 module.exports = router
