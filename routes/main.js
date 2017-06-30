@@ -5,6 +5,7 @@ const session = require('express-session')
 const expressValidator = require('express-validator')
 const models = require('../models')
 // const modelName = require('../models/modelname')
+var sess
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(session({
@@ -15,7 +16,16 @@ router.use(session({
 router.use(expressValidator())
 
 router.get('/', function (req, res) {
-  res.render('index')
+  sess = req.session
+  if (sess.username) {
+    return res.render('index')
+  } else {
+    return res.redirect('/login')
+  }
+})
+
+router.get('/login', function (req, res) {
+  res.render('login')
 })
 
 router.get('/signup', function (req, res) {
@@ -35,11 +45,35 @@ router.post('/signup', function (req, res) {
 })
 
 router.post('/login', function (req, res) {
-  res.redirect('/')
+  sess = req.session
+
+  models.User.findOne({
+    where: {
+      username: req.body.username
+    }}).then(function (user) {
+      if (user.username === req.body.username && user.password === req.body.password) {
+        sess.username = req.body.username
+        sess.password = req.body.password
+        console.log('the user is' + sess.username)
+        console.log('their password is' + sess.password)
+        return res.redirect('/')
+      } else if (user.username === req.body.username && user.password !== req.body.password) {
+        console.log('password was not correct')
+        return res.redirect('/login')
+      }
+    })
 })
 
 router.post('/newUser', function (req, res) {
   res.redirect('/signup')
+})
+
+router.post('/logout', function (req, res) {
+  sess = req.session
+  sess.username = ''
+  sess.password = ''
+
+  res.redirect('/')
 })
 
 module.exports = router
