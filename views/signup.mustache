@@ -28,21 +28,27 @@
     <main class="signup-main">
       <div class="signup-enter">
         <h2>Sign Up For Gabble:</h2>
+        {{#errors}}
+          <p>{{message}}</p>
+        {{/errors}}
         <form class="signup-form" action="/signup" method="post">
           <label for="username">Username:</label>
-          <input type="text" name="username" value="" placeholder="Username..."><br>
+          <input type="text" name="username" value="{{user.username}}" placeholder="Username..."><br>
           <label for="password1">Password:</label>
           <input type="password" name="password1" value="" placeholder="Password..."><br>
           <label for="password2">Confirm Password:</label>
           <input type="password" name="password2" value="" placeholder="Confirm..."><br>
           <label for="email">Email:</label>
-          <input type="email" name="email" value="" placeholder="Enter email..."><br>
+          <input type="email" name="email" value="{{user.email}}" placeholder="Enter email..."><br>
           <input type="submit" name="submit" value="Register">
         </form>
       </div>
       <div class="signup-about">
         <h2>Sign Up Information</h2>
         <p>You are signing up for Gabble. This is the best site you will ever sign up for. We track your every move.</p>
+        <p>Create a username of 5-20 characters. The username may only contain letters and numbers.</p>
+        <p>Create a password of 5-15 characters.</p>
+        <p>You must provide a valid email address for password retrieval and to sign up for our yearly newsletter.</p>
       </div>
     </main>
   </body>

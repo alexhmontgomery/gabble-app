@@ -18,8 +18,17 @@ router.use(expressValidator())
 router.get('/', function (req, res) {
   sess = req.session
   if (sess.username) {
-    return res.render('index', {
-      user: sess.username
+    models.Gab.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [{
+        model: models.Like,
+        as: 'like'
+      }]
+    }).then(function (gabs) {
+      return res.render('index', {
+        user: sess.username,
+        gabs: gabs
+      })
     })
   } else {
     return res.redirect('/login')
@@ -34,6 +43,24 @@ router.get('/signup', function (req, res) {
   res.render('signup')
 })
 
+router.get('/gab/:id', function (req, res) {
+  sess = req.session
+  models.Gab.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [{
+      model: models.Like,
+      as: 'like'
+    }]
+  }).then(function (gab) {
+    return res.render('gabdisplay', {
+      user: sess.username,
+      gab: gab
+    })
+  })
+})
+
 router.get('/logout', function (req, res) {
   sess = req.session
   sess.username = ''
@@ -41,12 +68,32 @@ router.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-router.get('/profile/:id', function (req, res) {
-  res.render('profile')
+router.get('/profile/:user', function (req, res) {
+  sess = req.session
+  models.Gab.findAll({
+    where: {
+      username: req.params.user
+    },
+    order: [['createdAt', 'DESC']],
+    include: [{
+      model: models.Like,
+      as: 'like'
+    }]
+  }).then(function (gabs) {
+    res.render('profile', {
+      user: sess.username,
+      gabs: gabs
+    })
+  })
 })
 
 router.get('/about', function (req, res) {
   res.render('about')
+})
+
+router.get('/newgab', function (req, res) {
+  console.log(req.session.username)
+  res.render('gabcreate')
 })
 
 router.post('/signup', function (req, res) {
@@ -60,10 +107,46 @@ router.post('/signup', function (req, res) {
       .then(function () {
         return res.redirect('/')
       })
+      .catch(function (error) {
+        res.render('signup', {
+          errors: error.errors,
+          user: user
+        })
+      })
   } else {
     console.log('Passwords do not match')
     return res.render('signup')
   }
+})
+
+router.post('/createAGab', function (req, res) {
+  res.redirect('/newgab')
+})
+
+router.post('/like', function (req, res) {
+  sess = req.session
+
+  const like = models.Like.build({
+    username: sess.username,
+    gabId: req.body.gabnum
+  })
+  like.save()
+    .then(function () {
+      return res.redirect('/')
+    })
+})
+
+router.post('/gabSubmit', function (req, res) {
+  sess = req.session
+
+  const gab = models.Gab.build({
+    username: sess.username,
+    content: req.body.content
+  })
+  gab.save()
+    .then(function () {
+      return res.redirect('/')
+    })
 })
 
 router.post('/login', function (req, res) {

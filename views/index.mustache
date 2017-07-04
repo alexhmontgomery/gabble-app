@@ -26,12 +26,25 @@
       </div>
     </header>
 
-    <main class="login-main">
-      <div class="login-enter">
-        <p>This is where the gabs go</p>
+    <main class="home-main">
+      <div class="home-create-gab">
+        <form class="create-gab" action="/createAGab" method="post">
+          <label for="content">Create a new Gab:</label>
+          <button type="submit" name="gabCreate">CREATE</button>
+        </form>
       </div>
-      <div class="login-about">
-        <p>Gab gab gab</p>
+      <div class="home-gab-displays">
+        {{#gabs}}
+        <div class="gab-post" id="gab-{{id}}">
+          <a href="/profile/{{username}}"><h4>{{username}}</h4></a>
+          <a href="/gab/{{id}}"><p>{{content}}</p>
+          <h5>Posted: {{createdAt}}</h5>
+          <h5>Likes: {{like.length}}</h5></a>
+          <form class="like-button" action="/like" method="post">
+            <button type="submit" name="gabnum" value={{id}}>Like</button>
+          </form>
+        </div>
+        {{/gabs}}
       </div>
     </main>
   </body>

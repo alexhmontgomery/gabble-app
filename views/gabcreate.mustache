@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Gabble | Profile</title>
+    <title>Gabble | Create A Gab</title>
     <link rel="stylesheet" href="/css/master.css">
     <link rel="icon" type="image/png" href="/images/gabble-logo1.png">
     <link href="https://fonts.googleapis.com/css?family=Quicksand|Open+Sans" rel="stylesheet">
@@ -21,26 +21,22 @@
       </div>
       <div class="head-links">
         <a href="/">Feed</a>
-        <a href="/profile/{{id}}">Logged in as:<br>{{user}}</a>
+        <a href="/profile/{{user}}">Logged in as:<br>{{user}}</a>
         <a href="/logout">Logout</a>
       </div>
     </header>
 
-    <main class="login-main">
-      {{#gabs}}
-      <h2>Here are all of {{username}}'s Gabs:</h2>
-      <div class="home-gab-displays">
-        <div class="gab-post" id="gab-{{id}}">
-          <a href="/profile/{{username}}"><h4>{{username}}</h4></a>
-          <a href="/gab/{{id}}"><p>{{content}}</p>
-          <h5>Posted: {{createdAt}}</h5>
-          <h5>Likes: {{like.length}}</h5></a>
-          <form class="like-button" action="/like" method="post">
-            <button type="submit" name="gabnum" value={{id}}>Like</button>
-          </form>
-        </div>
+    <main class="home-main">
+      <div class="home-new-gab">
+        <form class="gab-submit" action="/gabSubmit" method="post">
+          <label for="content">Create a New Gab:</label>
+          <textarea name="content" rows="8" cols="80"></textarea>
+          <input type="submit" name="submit" value="Post Gab!">
+        </form>
       </div>
-      {{/gabs}}
+      <div class="home-gab-displays">
+
+      </div>
     </main>
   </body>
 </html>
