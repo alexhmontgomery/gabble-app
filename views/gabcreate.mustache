@@ -20,17 +20,20 @@
         </div>
       </div>
       <div class="head-links">
-        <a href="/">Gab Feed</a>
+        <a href="/">Home</a>
         <a href="/profile/{{user}}">Logged in:<br>{{user}}</a>
         <a href="/logout">Logout</a>
       </div>
     </header>
 
     <main class="newgab-main">
+      {{#errors}}
+      <p class="errors">{{message}}</p>
+      {{/errors}}
       <div class="newgab-form">
         <form class="gab-submit" action="/gabSubmit" method="post">
           <label for="content">Create a New Gab:</label><br>
-          <textarea name="content" rows="8"></textarea><br>
+          <textarea name="content" rows="8" placeholder="Say anything that is on your mind in 140 characters or less...">{{content}}</textarea><br>
           <input type="submit" name="submit" value="Post Gab!">
         </form>
       </div>

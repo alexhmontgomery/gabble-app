@@ -5,9 +5,9 @@
     <title>Gabble | Gab</title>
     <link rel="stylesheet" href="/css/master.css">
     <link rel="icon" type="image/png" href="/images/gabble-logo2.png">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand|Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Athiti" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
   </head>
   <body>
     <header>
@@ -20,25 +20,51 @@
         </div>
       </div>
       <div class="head-links">
-        <a href="/">Feed</a>
+        <a href="/">Home</a>
         <a href="/profile/{{user}}">Logged in as:<br>{{user}}</a>
         <a href="/logout">Logout</a>
       </div>
     </header>
-    {{#gab}}
+
     <main class="gab-main">
+      {{#gab}}
       <div class="gab-post" id="gab-{{id}}">
         <h4>{{username}}</h4>
         <p>{{content}}</p>
-        <h5>Posted: {{createdAt}}</h5>
+        <h5 class="date">Posted: {{createdAt}}</h5>
+        <h5>Likes: {{like.length}}</h5></a>
+        <div class="gab-buttons">
+          <div>
+            {{#hideLike}}
+            <img class="like-img" src="/images/gabble-logo2.png" alt="gabble logo">
+            {{/hideLike}}
+            {{^hideLike}}
+            <form class="like-button" action="/like" method="post">
+              <button type="submit" name="gabnum" value={{id}}>Like</button>
+            </form>
+            {{/hideLike}}
+          </div>
+          <div>
+            {{#showDelete}}
+            <form class="delete-button" action="/delete" method="post">
+              <button type="submit" name="gabnum" value={{id}}>Delete</button>
+            </form>
+            {{/showDelete}}
+          </div>
+          <div class="">
+          </div>
+        </div>
       </div>
       <div class="gab-likes">
-        <h4>Liked By:</h4>
-        {{#like}}
-        <p>{{username}}</p>
-        {{/like}}
+        <h5>Liked By:</h5>
+        <ol>
+          {{#like}}
+          <li>{{username}}</li>
+          {{/like}}
+        </ol>
       </div>
+      {{/gab}}
     </main>
-    {{/gab}}
+    <script src="/js/client.js" charset="utf-8"></script>
   </body>
 </html>

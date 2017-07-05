@@ -87,8 +87,9 @@ router.get('/signup', function (req, res) {
 
 router.get('/newgab', function (req, res) {
   sess = req.session
-  console.log(req.session.username)
-  res.render('gabcreate')
+  res.render('gabcreate', {
+    user: sess.username
+  })
 })
 
 router.get('/gab/:id', function (req, res) {
@@ -102,6 +103,15 @@ router.get('/gab/:id', function (req, res) {
       as: 'like'
     }]
   }).then(function (gab) {
+    if (gab.username === sess.username) {
+      gab.showDelete = true
+    }
+    for (var k = 0; k < gab.like.length; k++) {
+      if (gab.like[k].username === sess.username) {
+        gab.hideLike = true
+      }
+    }
+
     return res.render('gabdisplay', {
       user: sess.username,
       gab: gab
@@ -128,9 +138,31 @@ router.get('/profile/:user', function (req, res) {
       as: 'like'
     }]
   }).then(function (gabs) {
+    const profLength = gabs.length
+    let profName = gabs[0].username
+    if (profName === sess.username) {
+      profName = 'Your'
+    }
+    let profLikesRec = 0
+    for (var i = 0; i < gabs.length; i++) {
+      profLikesRec = profLikesRec + gabs[i].like.length
+    }
+    for (var g = 0; g < gabs.length; g++) {
+      if (gabs[g].username === sess.username) {
+        gabs[g].showDelete = true
+      }
+      for (var k = 0; k < gabs[g].like.length; k++) {
+        if (gabs[g].like[k].username === sess.username) {
+          gabs[g].hideLike = true
+        }
+      }
+    }
     res.render('profile', {
       user: sess.username,
-      gabs: gabs
+      gabs: gabs,
+      profLength: profLength,
+      profLikesRec: profLikesRec,
+      profName: profName
     })
   })
 })
@@ -162,10 +194,6 @@ router.post('/signup', function (req, res) {
   }
 })
 
-router.post('/createAGab', function (req, res) {
-  res.redirect('/newgab')
-})
-
 router.post('/like', function (req, res) {
   sess = req.session
   const like = models.Like.build({
@@ -178,6 +206,22 @@ router.post('/like', function (req, res) {
     })
 })
 
+router.post('/delete', function (req, res) {
+  models.Like.destroy({
+    where: {
+      gabId: req.body.gabnum
+    }
+  }).then(function () {
+    models.Gab.destroy({
+      where: {
+        id: req.body.gabnum
+      }
+    }).then(function () {
+      res.redirect('/')
+    })
+  })
+})
+
 router.post('/gabSubmit', function (req, res) {
   sess = req.session
   const gab = models.Gab.build({
@@ -187,6 +231,14 @@ router.post('/gabSubmit', function (req, res) {
   gab.save()
     .then(function () {
       return res.redirect('/')
+    })
+    .catch(function (error) {
+      console.log(req.body.content)
+      res.render('gabcreate', {
+        errors: error.errors,
+        content: req.body.content,
+        user: sess.username
+      })
     })
 })
 
