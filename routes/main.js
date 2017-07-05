@@ -6,6 +6,7 @@ const expressValidator = require('express-validator')
 const models = require('../models')
 // const modelName = require('../models/modelname')
 var sess
+var loginError = ''
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(session({
@@ -63,7 +64,6 @@ router.get('/', function (req, res) {
           }
         }
       }
-      console.log(gabs[0])
       return res.render('feed', {
         user: sess.username,
         gabs: gabs,
@@ -78,7 +78,9 @@ router.get('/', function (req, res) {
 })
 
 router.get('/login', function (req, res) {
-  res.render('login')
+  res.render('login', {
+    loginError: loginError
+  })
 })
 
 router.get('/signup', function (req, res) {
@@ -123,6 +125,7 @@ router.get('/logout', function (req, res) {
   sess = req.session
   sess.username = ''
   sess.password = ''
+  loginError = ''
   res.redirect('/')
 })
 
@@ -189,8 +192,10 @@ router.post('/signup', function (req, res) {
         })
       })
   } else {
-    console.log('Passwords do not match')
-    return res.render('signup')
+    let signUpError = 'Passwords do not match'
+    return res.render('signup', {
+      signUpError: signUpError
+    })
   }
 })
 
@@ -233,7 +238,6 @@ router.post('/gabSubmit', function (req, res) {
       return res.redirect('/')
     })
     .catch(function (error) {
-      console.log(req.body.content)
       res.render('gabcreate', {
         errors: error.errors,
         content: req.body.content,
@@ -251,13 +255,15 @@ router.post('/login', function (req, res) {
       if (user.username === req.body.username && user.password === req.body.password) {
         sess.username = user.username
         sess.password = user.password
-        console.log('the user is' + sess.username)
-        console.log('their password is' + sess.password)
         return res.redirect('/')
       } else if (user.username === req.body.username && user.password !== req.body.password) {
-        console.log('password was not correct')
+        loginError = 'Password was not correct'
         return res.redirect('/login')
       }
+    })
+    .catch(function (error) {
+      loginError = 'Username was not found'
+      res.redirect('/login')
     })
 })
 
