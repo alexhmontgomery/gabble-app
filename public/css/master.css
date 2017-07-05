@@ -13,7 +13,7 @@ body {
 }
 
 header {
-  background-color: #F57C00;
+  background-color: #FF7043;
   height: 15vh;
   color: white;
   display: flex;
@@ -60,46 +60,198 @@ header {
 }
 
 .head-links a {
+  text-align: center;
   text-decoration: none;
   color: white;
   padding: 0% 3%;
   font-size: 0.8rem;
   width: 100%;
+  cursor: pointer;
+  padding: 1%;
 }
 
 .head-logo {
-  width: 5vw;
+  width: 6vw;
 }
 
-.login-main {
+main {
+  font-family: 'Athiti', sans-serif;
+}
+
+.feed-main {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
+.feed-stream, .feed-profile {
+  display: block;
+}
+
+.feed-main {
+  background-color: #E8F5E9;
+}
+
+.feed-stream {
+  flex-basis: 65%;
+  padding: 2%;
+}
+
+.feed-profile {
+  flex-basis: 35%;
+  padding: 2%;
+}
+
+.profile-info {
+  margin: 5% 3% 3% 3%;
+  background-color: rgb(46, 204, 113);
+  border-radius: 1%;
+  padding: 3% 3% 3% 5%;
+}
+
+.profile-info-title {
+  text-decoration: underline;
+}
+
+.create-gab {
+  margin: 5% 3%;
+  background-color: #FF7043;
+  border-radius: 2%;
+  padding: 3%;
+  text-align: center;
+}
+
+.create-gab a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.gab-post {
+  background-color: #A5D6A7;
+  border-radius: 1%;
+  margin: 3%;
+  padding: 2%;
+  text-decoration: none;
+}
+
+.gab-post h4 {
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.gab-post a {
+  text-decoration: none;
+  color: #111111;
+}
+
+.gab-content {
+  line-height: 1.25;
+  font-style: italic;
+}
+
+.gab-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.gab-buttons div {
+  flex-basis: 33.3%;
+  text-align: center;
+}
+
+.like-button button, .delete-button button, .gab-submit input, .login-form button, .signup-form button {
+  background-color: #607D8B;
+  border-radius: 2%;
+  border: none;
+  width: 30%;
+  font-family: 'Athiti', sans-serif;
+  cursor: pointer;
+}
+
+.like-img {
+  width: 4vw;
+}
+
+/*---Login Page---*/
+
+.login-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.new-user {
+  margin: 4% 0%;
+}
+
+.new-user button {
+  background-color: #A5D6A7;
+  border-radius: 2%;
+  border: none;
+  width: 50%;
+  font-family: 'Athiti', sans-serif;
+  cursor: pointer;
+}
+
 .login-enter {
-  flex-basis: 60%;
+  flex-basis: 40%;
   padding: 5%;
+  text-align: right;
 }
 
 .login-about {
   text-align: left;
-  flex-basis: 40%;
+  flex-basis: 60%;
   padding: 5%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.gab-post {
-  border: 1px solid grey;
-  margin: 1% 0%;
+/*---Sign Up Page---*/
+
+.signup-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.gab-post h4 {
-  font-weight: 700;
+.signup-form input {
+  width: 50%;
 }
 
-/*h1 {
-  font-family: 'Fjalla One', sans-serif;
-}*/
+.signup-enter {
+  flex-basis: 50%;
+  padding: 5%;
+  text-align: right;
+}
+
+.signup-about {
+  text-align: left;
+  flex-basis: 50%;
+  padding: 5% 3% 5% 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/*---New Gab---*/
+.newgab-form {
+  margin: 5% 20%;
+}
+
+.gab-submit {
+  text-align: center;
+}
+
+.gab-submit label, .gab-submit input {
+  font-weight: 800;
+}
+
+.gab-submit textarea {
+  background-color: #A5D6A7;
+  width: 100%;
+}

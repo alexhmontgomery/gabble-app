@@ -15,6 +15,34 @@ router.use(session({
 }))
 router.use(expressValidator())
 
+// middleware for finding user gabs and likes counts
+router.use(function (req, res, next) {
+  sess = req.session
+  models.Gab.findAll({
+    where: {
+      username: sess.username
+    },
+    include: [{
+      model: models.Like,
+      as: 'like'
+    }]
+  }).then(function (gabs) {
+    sess.userGabs = gabs.length
+    sess.userLikesRec = 0
+    for (var i = 0; i < gabs.length; i++) {
+      sess.userLikesRec = sess.userLikesRec + gabs[i].like.length
+    }
+  })
+  models.Like.findAll({
+    where: {
+      username: sess.username
+    }
+  }).then(function (likes) {
+    sess.userLikesGiv = likes.length
+  })
+  return next()
+})
+
 router.get('/', function (req, res) {
   sess = req.session
   if (sess.username) {
@@ -25,9 +53,23 @@ router.get('/', function (req, res) {
         as: 'like'
       }]
     }).then(function (gabs) {
-      return res.render('index', {
+      for (var i = 0; i < gabs.length; i++) {
+        if (gabs[i].username === sess.username) {
+          gabs[i].showDelete = true
+        }
+        for (var k = 0; k < gabs[i].like.length; k++) {
+          if (gabs[i].like[k].username === sess.username) {
+            gabs[i].hideLike = true
+          }
+        }
+      }
+      console.log(gabs[0])
+      return res.render('feed', {
         user: sess.username,
-        gabs: gabs
+        gabs: gabs,
+        userGabs: sess.userGabs,
+        userLikesRec: sess.userLikesRec,
+        userLikesGiv: sess.userLikesGiv
       })
     })
   } else {
@@ -41,6 +83,12 @@ router.get('/login', function (req, res) {
 
 router.get('/signup', function (req, res) {
   res.render('signup')
+})
+
+router.get('/newgab', function (req, res) {
+  sess = req.session
+  console.log(req.session.username)
+  res.render('gabcreate')
 })
 
 router.get('/gab/:id', function (req, res) {
@@ -91,11 +139,6 @@ router.get('/about', function (req, res) {
   res.render('about')
 })
 
-router.get('/newgab', function (req, res) {
-  console.log(req.session.username)
-  res.render('gabcreate')
-})
-
 router.post('/signup', function (req, res) {
   if (req.body.password1 === req.body.password2) {
     const user = models.User.build({
@@ -125,7 +168,6 @@ router.post('/createAGab', function (req, res) {
 
 router.post('/like', function (req, res) {
   sess = req.session
-
   const like = models.Like.build({
     username: sess.username,
     gabId: req.body.gabnum
@@ -138,7 +180,6 @@ router.post('/like', function (req, res) {
 
 router.post('/gabSubmit', function (req, res) {
   sess = req.session
-
   const gab = models.Gab.build({
     username: sess.username,
     content: req.body.content
@@ -151,7 +192,6 @@ router.post('/gabSubmit', function (req, res) {
 
 router.post('/login', function (req, res) {
   sess = req.session
-
   models.User.findOne({
     where: {
       username: req.body.username

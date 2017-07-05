@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gabble | Feed</title>
+    <link rel="stylesheet" href="/css/master.css">
+    <link rel="icon" type="image/png" href="/images/gabble-logo2.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Athiti" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="head-title">
+        <div class="logo-area">
+          <img class="head-logo" src="/images/gabble-logo2.png" alt="gabble logo">
+        </div>
+        <div class="title-area">
+          <h1>Gabble</h1>
+        </div>
+      </div>
+      <div class="head-links">
+        <a href="/newgab">New Gab</a>
+        <a href="/profile/{{user}}">Logged in:<br>{{user}}</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </header>
+
+    <main class="feed-main">
+      <section class="feed-stream">
+        {{#gabs}}
+        <div class="gab-post" id="gab-{{id}}">
+          <a href="/profile/{{username}}"><h4>{{username}}</h4></a>
+          <a href="/gab/{{id}}"><p class="gab-content">{{content}}</p>
+          <h5 class="date">Posted: {{createdAt}}</h5>
+          <h5>Likes: {{like.length}}</h5></a>
+          <div class="gab-buttons">
+            <div>
+              {{#hideLike}}
+              <img class="like-img" src="/images/gabble-logo2.png" alt="gabble logo">
+              {{/hideLike}}
+              {{^hideLike}}
+              <form class="like-button" action="/like" method="post">
+                <button type="submit" name="gabnum" value={{id}}>Like</button>
+              </form>
+              {{/hideLike}}
+            </div>
+            <div>
+              {{#showDelete}}
+              <form class="delete-button" action="/delete" method="post">
+                <button type="submit" name="gabnum" value={{id}}>Delete</button>
+              </form>
+              {{/showDelete}}
+            </div>
+            <div class="">
+            </div>
+          </div>
+        </div>
+        {{/gabs}}
+      </section>
+      <section class="feed-profile">
+        <div class="profile-info">
+          <h2 class="profile-info-title">Your Stats:</h2>
+          <h2>{{user}}</h2>
+          <h4>Gabs: {{userGabs}}</h4>
+          <h4>Likes Received: {{userLikesRec}}</h4>
+          <h4>Likes Given: {{userLikesGiv}}</h4>
+        </div>
+        <div class="create-gab">
+          <a href="/newgab">Create a New Gab</a>
+        </div>
+        <!-- <form class="create-gab" action="/createAGab" method="post">
+          <button type="submit" name="gabCreate">Create A New Gab</button>
+        </form> -->
+      </section>
+    </main>
+    <!-- <div class="home-create-gab">
+      <form class="create-gab" action="/createAGab" method="post">
+        <label for="content">Create a new Gab:</label>
+        <button type="submit" name="gabCreate">CREATE</button>
+      </form>
+    </div> -->
+    <script src="/js/client.js" charset="utf-8"></script>
+  </body>
+</html>

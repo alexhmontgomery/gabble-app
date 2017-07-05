@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Gabble | Create A Gab</title>
+    <title>Gabble | New Gab</title>
     <link rel="stylesheet" href="/css/master.css">
-    <link rel="icon" type="image/png" href="/images/gabble-logo1.png">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand|Open+Sans" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/images/gabble-logo2.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Athiti" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   </head>
@@ -13,29 +13,26 @@
     <header>
       <div class="head-title">
         <div class="logo-area">
-          <img class="head-logo" src="/images/gabble-logo1.png" alt="gabble logo">
+          <img class="head-logo" src="/images/gabble-logo2.png" alt="gabble logo">
         </div>
         <div class="title-area">
           <h1>Gabble</h1>
         </div>
       </div>
       <div class="head-links">
-        <a href="/">Feed</a>
-        <a href="/profile/{{user}}">Logged in as:<br>{{user}}</a>
+        <a href="/">Gab Feed</a>
+        <a href="/profile/{{user}}">Logged in:<br>{{user}}</a>
         <a href="/logout">Logout</a>
       </div>
     </header>
 
-    <main class="home-main">
-      <div class="home-new-gab">
+    <main class="newgab-main">
+      <div class="newgab-form">
         <form class="gab-submit" action="/gabSubmit" method="post">
-          <label for="content">Create a New Gab:</label>
-          <textarea name="content" rows="8" cols="80"></textarea>
+          <label for="content">Create a New Gab:</label><br>
+          <textarea name="content" rows="8"></textarea><br>
           <input type="submit" name="submit" value="Post Gab!">
         </form>
-      </div>
-      <div class="home-gab-displays">
-
       </div>
     </main>
   </body>
