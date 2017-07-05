@@ -207,12 +207,17 @@ main {
 }
 
 .login-about {
-  text-align: left;
+  text-align: justify;
   flex-basis: 60%;
   padding: 5%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.login-about p {
+  padding: 1% 0%;
+  line-height: 1.3;
 }
 
 /*---Sign Up Page---*/
@@ -289,4 +294,24 @@ main {
 .profile-gabs-title {
   margin: 0% 5%;
   font-size: 1.3rem;
+}
+
+/*---About Page---*/
+.about-main {
+  margin: 2% 5%;
+}
+
+.about-main h2 {
+  text-align: center;
+  padding: 2% 0%;
+}
+
+.about-main ul {
+  list-style-type: square;
+  /*list-style-image: url('/images/gabble-logo2.png');*/
+}
+
+.about-main li {
+  line-height: 1.2;
+  padding: 1% 0%;
 }
