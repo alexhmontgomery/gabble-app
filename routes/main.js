@@ -168,6 +168,14 @@ router.get('/profile/:user', function (req, res) {
       profName: profName
     })
   })
+  .catch(function (errors) {
+    res.render('profile', {
+      user: sess.username,
+      profLength: 0,
+      profLikesRec: 0,
+      profName: req.params.user
+    })
+  })
 })
 
 router.get('/about', function (req, res) {
