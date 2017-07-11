@@ -11,8 +11,8 @@ module.exports = function (sequelize, DataTypes) {
           msg: 'Username can only contain numbers & letters'
         },
         len: {
-          args: [5, 20],
-          msg: 'Username must be 5-20 characters'
+          args: [1, 20],
+          msg: 'Username must be 1-20 characters'
         }
       }
     },
