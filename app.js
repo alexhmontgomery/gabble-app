@@ -10,8 +10,9 @@ app.set('view engine', 'mustache')
 app.set('views', './views')
 app.use(express.static('public'))
 
-app.listen(3000, function () {
-  console.log('Server is ON! Go to 0.0.0.0:3000')
+const port = process.env.PORT || 3000
+app.listen(port, function () {
+  console.log('Server is ON! Go to host:port:' + port)
 })
 
 app.use(session({
