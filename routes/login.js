@@ -5,7 +5,6 @@ const session = require('express-session')
 const expressValidator = require('express-validator')
 const config = require('../config/main')
 const models = require('../models')
-const jwt = require('jsonwebtoken')
 
 var sess
 
