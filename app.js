@@ -4,7 +4,7 @@ const app = express()
 const session = require('express-session')
 const loginRoutes = require('./routes/login.js')
 const userRoutes = require('./routes/user.js')
-const config = require('./config/main')
+// const config = require('./config/main')
 var pg = require('pg')
 
 app.engine('mustache', mustache())
@@ -12,6 +12,7 @@ app.set('view engine', 'mustache')
 app.set('views', './views')
 app.use(express.static('public'))
 
+// Allows app to connect to Heroku database
 pg.defaults.ssl = true
 pg.connect(process.env.DATABASE_URL, function (err, client) {
   if (err) throw err
