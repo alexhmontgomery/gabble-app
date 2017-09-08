@@ -38,16 +38,18 @@ router.get('/about', function (req, res) {
 
 router.post('/signup', function (req, res) {
   if (req.body.password1 === req.body.password2) {
-    const user = models.User.build({
+    const newUser = models.User.build({
       username: req.body.username,
       password: req.body.password1,
       email: req.body.email
     })
-    user.save()
-      .then(function () {
+    newUser.save()
+      .then(function (user) {
+        console.log(user)
         return res.redirect('/')
       })
       .catch(function (error) {
+        console.log(error)
         res.render('signup', {
           errors: error.errors,
           user: user
