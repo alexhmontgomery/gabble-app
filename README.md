@@ -27,19 +27,11 @@ npm install
 npm start
 ```
 
-## Instructions
+## Built With
+* Node.js - server side language
+* Express - web framework for Node
+* Mustache - template engine
+* PostgresQL - database management system
 
-### Editing the test parameters
-
-The script is set up to determine if 'active labor' has been entered by whether or not the 5-1-1 Rule has occurred. This is a standard rule used by many hospitals to help expecting parents determine if they are in 'active labor'. The rule states that contractions must be at least 1 minute in duration, occurring at a frequency of 5 minutes (or less) for at least one hour.
-
-If you wish to adjust these default parameters, you can change the variable test settings in the script. The test parameters on lines 15-18 (below) would need to be changed if you wish to adjust the settings for 'active labor'.
-
-```
-#For 5-1-1, testContraction = 60
-testContraction = 60
-#For 5-1-1, testFrequency = 300
-testFrequency = 300
-#For 5-1-1, testRange = 3600
-testRange = 3600
-```
+## Development Notes
+This was the first full stack project that I built using an object relational database. 
