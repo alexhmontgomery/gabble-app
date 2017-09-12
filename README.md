@@ -30,4 +30,4 @@ npm start
 * PostgresQL - database management system
 
 ## Development Notes
-This was the first full stack project that I built using an object relational database.
+This was the first full stack project that I built using an object relational database. I had to learn how to handle the associations between multiple tables. I had to manage the one-to-many relationships of users to gabs and gabs to likes. 
