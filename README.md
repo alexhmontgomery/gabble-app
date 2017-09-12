@@ -15,10 +15,6 @@ I created this project during my time at The Iron Yard coding bootcamp.
 
 ## Getting Started
 
-### Prerequisites
-
-This script was designed using Python 2.7. If using Python 3.0 or above, adjustments will be necessary.
-
 ### Installation
 ```
 git clone https://github.com/alexhmontgomery/gabble-app
@@ -34,4 +30,4 @@ npm start
 * PostgresQL - database management system
 
 ## Development Notes
-This was the first full stack project that I built using an object relational database. 
+This was the first full stack project that I built using an object relational database.
